@@ -1,0 +1,30 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "DateTimeSystem",
+	"Description": "Unreal Engine plugin that contains a date time system with a day night cycle",
+	"Category": "Other",
+	"CreatedBy": "Creatorama Studio",
+	"CreatedByURL": "https://github.com/CreatoramaStudio/DateTimeSystem",
+	"DocsURL": "https://github.com/CreatoramaStudio/DateTimeSystem/wiki",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/CreatoramaStudio/DateTimeSystem/issues",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "DateTimeSystem",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "SunPosition",
+			"Enabled": true
+		}
+	]
+}
