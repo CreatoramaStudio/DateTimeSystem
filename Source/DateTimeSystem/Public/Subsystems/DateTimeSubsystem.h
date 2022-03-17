@@ -5,7 +5,9 @@
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "Data/Enums.h"
+#include "Data/Structs.h"
 #include "DateTimeSubsystem.generated.h"
+
 
 DECLARE_DYNAMIC_DELEGATE(FOnTimeEvent);
 
@@ -57,6 +59,8 @@ protected:
 
 
 	TMap<FDateTime, FOnTimeEventMulticast> DateTimeEvents;
+
+	TMap<FSchedule, FOnTimeEventMulticast> WeeklyEvents;
 
 	//UPROPERTY(BlueprintReadWrite, Category = "Time Subsystem")
 
@@ -115,9 +119,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
 		void UnbindAllDateTimeEvents(FDateTime DateTime);
 
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void BindWeeklyEvent(FSchedule Schedule, const FOnTimeEvent& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void UnbindWeeklyEvent(FSchedule Schedule, const FOnTimeEvent& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void UnbindAllWeeklyEvents(FSchedule Schedule);
+
 protected:
 
 	void CallDateTimeEvents(FDateTime DateTime);
+
+	void CallWeeklyEvents(FSchedule Schedule);
 
 	void UpdateTime();
 

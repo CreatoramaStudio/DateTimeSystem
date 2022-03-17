@@ -106,9 +106,42 @@ void UDateTimeSubsystem::UnbindAllDateTimeEvents(FDateTime DateTime)
 	}
 }
 
+void UDateTimeSubsystem::BindWeeklyEvent(FSchedule Schedule, const FOnTimeEvent& Value)
+{
+	FOnTimeEventMulticast& MulticastDelegate = WeeklyEvents.FindOrAdd(Schedule);
+	MulticastDelegate.Add(Value);
+}
+
+void UDateTimeSubsystem::UnbindWeeklyEvent(FSchedule Schedule, const FOnTimeEvent& Value)
+{
+	FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(Schedule);
+	if (MulticastDelegate)
+	{
+		MulticastDelegate->Remove(Value);
+	}
+}
+
+void UDateTimeSubsystem::UnbindAllWeeklyEvents(FSchedule Schedule)
+{
+	FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(Schedule);
+	if (MulticastDelegate)
+	{
+		MulticastDelegate->Clear();
+	}
+}
+
 void UDateTimeSubsystem::CallDateTimeEvents(FDateTime DateTime)
 {
 	FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime);
+	if (MulticastDelegate && MulticastDelegate->IsBound())
+	{
+		MulticastDelegate->Broadcast();
+	}
+}
+
+void UDateTimeSubsystem::CallWeeklyEvents(FSchedule Schedule)
+{
+	FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(Schedule);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
@@ -144,5 +177,7 @@ void UDateTimeSubsystem::UpdateTime()
 	}
 
 	CallDateTimeEvents(CurrentDate);
+
+	CallWeeklyEvents(FSchedule(GetDayOfTheWeek(), CurrentDate.GetHour(), CurrentDate.GetMinute()));
 
 }
