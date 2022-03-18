@@ -58,9 +58,14 @@ protected:
 		FOnChangeYear OnChangeYear;
 
 
+	UPROPERTY()
 	TMap<FDateTime, FOnTimeEventMulticast> DateTimeEvents;
 
-	TMap<FSchedule, FOnTimeEventMulticast> WeeklyEvents;
+	UPROPERTY()
+	TMap<FWeekTime, FOnTimeEventMulticast> WeeklyEvents;
+
+	UPROPERTY()
+	TMap<FMonthTime, FOnTimeEventMulticast> MonthlyEvents;
 
 	//UPROPERTY(BlueprintReadWrite, Category = "Time Subsystem")
 
@@ -110,6 +115,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
 		bool IsTimeActive();
 
+	//Date time
+
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
 		void BindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value);
 
@@ -119,20 +126,35 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
 		void UnbindAllDateTimeEvents(FDateTime DateTime);
 
-	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void BindWeeklyEvent(FSchedule Schedule, const FOnTimeEvent& Value);
+	//Week
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindWeeklyEvent(FSchedule Schedule, const FOnTimeEvent& Value);
+		void BindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindAllWeeklyEvents(FSchedule Schedule);
+		void UnbindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void UnbindAllWeeklyEvents(FWeekTime WeekTime);
+
+	//Month
+
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void BindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void UnbindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
+		void UnbindAllMonthlyEvents(FMonthTime MonthTime);
 
 protected:
 
 	void CallDateTimeEvents(FDateTime DateTime);
 
-	void CallWeeklyEvents(FSchedule Schedule);
+	void CallWeeklyEvents(FWeekTime WeekTime);
+
+	void CallMonthlyEvents(FMonthTime MonthTime);
 
 	void UpdateTime();
 
