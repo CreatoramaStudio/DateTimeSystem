@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
-#include "Data/Enums.h"
-#include "Data/Structs.h"
+#include "Data/DateTimeEnums.h"
+#include "Data/DateTimeStructs.h"
 #include "DateTimeSubsystem.generated.h"
 
 
@@ -66,8 +66,6 @@ protected:
 
 	UPROPERTY()
 	TMap<FMonthTime, FOnTimeEventMulticast> MonthlyEvents;
-
-	//UPROPERTY(BlueprintReadWrite, Category = "Time Subsystem")
 
 private:
 

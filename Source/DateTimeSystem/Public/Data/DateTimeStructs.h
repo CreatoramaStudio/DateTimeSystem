@@ -2,9 +2,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Data/Enums.h"
+#include "Data/DateTimeEnums.h"
 #include "UObject/NoExportTypes.h"
-#include "Structs.generated.h"
+#include "DateTimeStructs.generated.h"
 
 USTRUCT(BlueprintType)
 struct DATETIMESYSTEM_API FWeekTime

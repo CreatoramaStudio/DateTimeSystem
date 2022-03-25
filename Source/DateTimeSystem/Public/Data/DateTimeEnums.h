@@ -2,7 +2,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Enums.generated.h"
+#include "DateTimeEnums.generated.h"
 
 
 UENUM(BlueprintType)
