@@ -11,7 +11,6 @@ UDateTimeSubsystem::UDateTimeSubsystem()
 void UDateTimeSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
-
 }
 
 void UDateTimeSubsystem::Deinitialize()
@@ -20,39 +19,39 @@ void UDateTimeSubsystem::Deinitialize()
 
 }
 
-void UDateTimeSubsystem::SetDefaultDateTime(FDateTime Value)
+void UDateTimeSubsystem::SetDefaultDateTime(const FDateTime Value)
 {
 	CurrentDate = Value;
 }
 
-FDateTime UDateTimeSubsystem::GetDateTime()
+FDateTime UDateTimeSubsystem::GetDateTime() const
 {
 	return CurrentDate;
 }
 
-FString UDateTimeSubsystem::GetStringDateTime()
+FString UDateTimeSubsystem::GetStringDateTime() const
 {
 	return CurrentDate.ToString();
 }
 
-ETimeOfTheDay UDateTimeSubsystem::GetTimeOfTheDay()
+ETimeOfTheDay UDateTimeSubsystem::GetTimeOfTheDay() const
 {
 	return CurrentDate.IsMorning() ? ETimeOfTheDay::Morning : ETimeOfTheDay::Afternoon;
 }
 
-EDayOfTheWeek UDateTimeSubsystem::GetDayOfTheWeek()
+EDayOfTheWeek UDateTimeSubsystem::GetDayOfTheWeek() const
 {
 	return (EDayOfTheWeek)CurrentDate.GetDayOfWeek();
 }
 
-EMonthOfTheYear UDateTimeSubsystem::GetMonthOfTheYear()
+EMonthOfTheYear UDateTimeSubsystem::GetMonthOfTheYear() const
 {
 	return (EMonthOfTheYear)CurrentDate.GetMonthOfYear();
 }
 
-void UDateTimeSubsystem::StartTime(FTimespan timeUpdateSpeed, float UpdateRate)
+void UDateTimeSubsystem::StartTime(const FTimespan InTimeUpdateSpeed, const float UpdateRate)
 {
-	TimeUpdateSpeed = timeUpdateSpeed;
+	TimeUpdateSpeed = InTimeUpdateSpeed;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UDateTimeSubsystem::UpdateTime, UpdateRate, true, 0);
 }
 
@@ -71,24 +70,24 @@ void UDateTimeSubsystem::StopTime()
 	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 }
 
-bool UDateTimeSubsystem::IsTimePaused()
+bool UDateTimeSubsystem::IsTimePaused() const
 {
 	return GetWorld()->GetTimerManager().IsTimerPaused(TimerHandle);
 }
 
-bool UDateTimeSubsystem::IsTimeActive()
+bool UDateTimeSubsystem::IsTimeActive() const
 {
 	return GetWorld()->GetTimerManager().IsTimerActive(TimerHandle);
 }
 
 
-void UDateTimeSubsystem::BindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value)
+void UDateTimeSubsystem::BindDateTimeEvent(const FDateTime DateTime, const FOnTimeEvent& Value)
 {
 	FOnTimeEventMulticast& MulticastDelegate = DateTimeEvents.FindOrAdd(DateTime);
 	MulticastDelegate.Add(Value);
 }
 
-void UDateTimeSubsystem::UnbindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value)
+void UDateTimeSubsystem::UnbindDateTimeEvent(const FDateTime DateTime, const FOnTimeEvent& Value)
 {
 	if (FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime))
 	{
@@ -96,7 +95,7 @@ void UDateTimeSubsystem::UnbindDateTimeEvent(FDateTime DateTime, const FOnTimeEv
 	}
 }
 
-void UDateTimeSubsystem::UnbindAllDateTimeEvents(FDateTime DateTime)
+void UDateTimeSubsystem::UnbindAllDateTimeEvents(const FDateTime DateTime)
 {
 	if (FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime))
 	{
@@ -104,13 +103,13 @@ void UDateTimeSubsystem::UnbindAllDateTimeEvents(FDateTime DateTime)
 	}
 }
 
-void UDateTimeSubsystem::BindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value)
+void UDateTimeSubsystem::BindWeeklyEvent(const FWeekTime WeekTime, const FOnTimeEvent& Value)
 {
 	FOnTimeEventMulticast& MulticastDelegate = WeeklyEvents.FindOrAdd(WeekTime);
 	MulticastDelegate.Add(Value);
 }
 
-void UDateTimeSubsystem::UnbindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value)
+void UDateTimeSubsystem::UnbindWeeklyEvent(const FWeekTime WeekTime, const FOnTimeEvent& Value)
 {
 	if (FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime))
 	{
@@ -118,7 +117,7 @@ void UDateTimeSubsystem::UnbindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEven
 	}
 }
 
-void UDateTimeSubsystem::UnbindAllWeeklyEvents(FWeekTime WeekTime)
+void UDateTimeSubsystem::UnbindAllWeeklyEvents(const FWeekTime WeekTime)
 {
 	if (FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime))
 	{
@@ -126,13 +125,13 @@ void UDateTimeSubsystem::UnbindAllWeeklyEvents(FWeekTime WeekTime)
 	}
 }
 
-void UDateTimeSubsystem::BindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value)
+void UDateTimeSubsystem::BindMonthlyEvent(const FMonthTime MonthTime, const FOnTimeEvent& Value)
 {
 	FOnTimeEventMulticast& MulticastDelegate = MonthlyEvents.FindOrAdd(MonthTime);
 	MulticastDelegate.Add(Value);
 }
 
-void UDateTimeSubsystem::UnbindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value)
+void UDateTimeSubsystem::UnbindMonthlyEvent(const FMonthTime MonthTime, const FOnTimeEvent& Value)
 {
 	if (FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime))
 	{
@@ -140,7 +139,7 @@ void UDateTimeSubsystem::UnbindMonthlyEvent(FMonthTime MonthTime, const FOnTimeE
 	}
 }
 
-void UDateTimeSubsystem::UnbindAllMonthlyEvents(FMonthTime MonthTime)
+void UDateTimeSubsystem::UnbindAllMonthlyEvents(const FMonthTime MonthTime)
 {
 	if (FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime))
 	{
@@ -148,27 +147,27 @@ void UDateTimeSubsystem::UnbindAllMonthlyEvents(FMonthTime MonthTime)
 	}
 }
 
-void UDateTimeSubsystem::CallDateTimeEvents(FDateTime DateTime)
+void UDateTimeSubsystem::CallDateTimeEvents(const FDateTime DateTime)
 {
-	FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime);
+	const FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
 	}
 }
 
-void UDateTimeSubsystem::CallWeeklyEvents(FWeekTime WeekTime)
+void UDateTimeSubsystem::CallWeeklyEvents(const FWeekTime WeekTime)
 {
-	FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime);
+	const FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
 	}
 }
 
-void UDateTimeSubsystem::CallMonthlyEvents(FMonthTime MonthTime)
+void UDateTimeSubsystem::CallMonthlyEvents(const FMonthTime MonthTime)
 {
-	FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime);
+	const FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
@@ -177,7 +176,7 @@ void UDateTimeSubsystem::CallMonthlyEvents(FMonthTime MonthTime)
 
 void UDateTimeSubsystem::UpdateTime()
 {
-	FDateTime OldValue = CurrentDate;
+	const FDateTime OldValue = CurrentDate;
 
 	CurrentDate += TimeUpdateSpeed;
 

@@ -36,35 +36,38 @@ public:
 
 protected:
 
+	UPROPERTY(SaveGame)
 	FDateTime CurrentDate;
 
+	UPROPERTY(SaveGame)
 	FTimespan TimeUpdateSpeed;
 
+	UPROPERTY(SaveGame)
 	FTimerHandle TimerHandle;
 
-	UPROPERTY(BlueprintAssignable, Category = "Time Subsystem|Events")
-		FOnUpdateTime OnUpdateTime;
+	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
+	FOnUpdateTime OnUpdateTime;
 
-	UPROPERTY(BlueprintAssignable, Category = "Time Subsystem|Events")
-		FOnChangeHour OnChangeHour;
+	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
+	FOnChangeHour OnChangeHour;
 
-	UPROPERTY(BlueprintAssignable, Category = "Time Subsystem|Events")
-		FOnChangeDay OnChangeDay;
+	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
+	FOnChangeDay OnChangeDay;
 
-	UPROPERTY(BlueprintAssignable, Category = "Time Subsystem|Events")
-		FOnChangeMouth OnChangeMouth;
+	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
+	FOnChangeMouth OnChangeMouth;
 
-	UPROPERTY(BlueprintAssignable, Category = "Time Subsystem|Events")
-		FOnChangeYear OnChangeYear;
+	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
+	FOnChangeYear OnChangeYear;
 
 
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TMap<FDateTime, FOnTimeEventMulticast> DateTimeEvents;
 
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TMap<FWeekTime, FOnTimeEventMulticast> WeeklyEvents;
 
-	UPROPERTY()
+	UPROPERTY(SaveGame)
 	TMap<FMonthTime, FOnTimeEventMulticast> MonthlyEvents;
 
 private:
@@ -78,73 +81,73 @@ public:
 	virtual void Deinitialize() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem")
-		void SetDefaultDateTime(FDateTime Value);
+	void SetDefaultDateTime(FDateTime Value);
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		FDateTime GetDateTime();
+	FDateTime GetDateTime() const;
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		FString GetStringDateTime();
+	FString GetStringDateTime() const;
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		ETimeOfTheDay GetTimeOfTheDay();
+	ETimeOfTheDay GetTimeOfTheDay() const;
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		EDayOfTheWeek GetDayOfTheWeek();
+	EDayOfTheWeek GetDayOfTheWeek() const;
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		EMonthOfTheYear GetMonthOfTheYear();
+	EMonthOfTheYear GetMonthOfTheYear() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem")
-		void StartTime(FTimespan timeUpdateSpeed, float UpdateRate = 1);
+	void StartTime(FTimespan InTimeUpdateSpeed, float UpdateRate = 1);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem")
-		void PauseTime();
+	void PauseTime();
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem")
-		void UnPauseTime();
+	void UnPauseTime();
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem")
-		void StopTime();
+	void StopTime();
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		bool IsTimePaused();
+	bool IsTimePaused() const;
 
 	UFUNCTION(BlueprintPure, Category = "Time Subsystem")
-		bool IsTimeActive();
+	bool IsTimeActive() const;
 
 	//Date time
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void BindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value);
+	void BindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value);
+	void UnbindDateTimeEvent(FDateTime DateTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindAllDateTimeEvents(FDateTime DateTime);
+	void UnbindAllDateTimeEvents(FDateTime DateTime);
 
 	//Week
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void BindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value);
+	void BindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value);
+	void UnbindWeeklyEvent(FWeekTime WeekTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindAllWeeklyEvents(FWeekTime WeekTime);
+	void UnbindAllWeeklyEvents(FWeekTime WeekTime);
 
 	//Month
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void BindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value);
+	void BindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value);
+	void UnbindMonthlyEvent(FMonthTime MonthTime, const FOnTimeEvent& Value);
 
 	UFUNCTION(BlueprintCallable, Category = "Time Subsystem|Date Time Events")
-		void UnbindAllMonthlyEvents(FMonthTime MonthTime);
+	void UnbindAllMonthlyEvents(FMonthTime MonthTime);
 
 protected:
 
@@ -157,5 +160,4 @@ protected:
 	void UpdateTime();
 
 private:
-
 };

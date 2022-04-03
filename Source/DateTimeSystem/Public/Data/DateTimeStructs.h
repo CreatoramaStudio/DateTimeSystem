@@ -9,23 +9,23 @@
 USTRUCT(BlueprintType)
 struct DATETIMESYSTEM_API FWeekTime
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
 
-	UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite)
-		EDayOfTheWeek DayOfTheWeek = EDayOfTheWeek::Monday;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite)
+    EDayOfTheWeek DayOfTheWeek = EDayOfTheWeek::Monday;
 
-	UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0, UIMin = 0, ClampMax = 23, UIMax = 23))
-		int32 Hour = 0;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0, UIMin = 0, ClampMax = 23, UIMax = 23))
+    int32 Hour = 0;
 
-	UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0, UIMin = 0, ClampMax = 59, UIMax = 59))
-		int32 Minute = 0;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0, UIMin = 0, ClampMax = 59, UIMax = 59))
+    int32 Minute = 0;
 
     FWeekTime() : FWeekTime(EDayOfTheWeek::Monday,0,0)
     {}
 
-    FWeekTime(EDayOfTheWeek DayOfTheWeek, int32 Hour, int32 Minute) : DayOfTheWeek(DayOfTheWeek), Hour(Hour), Minute(Minute)
+    FWeekTime(const EDayOfTheWeek DayOfTheWeek, const int32 Hour, const int32 Minute) : DayOfTheWeek(DayOfTheWeek), Hour(Hour), Minute(Minute)
     {}
 
     FWeekTime(const FWeekTime& Other) : FWeekTime(Other.DayOfTheWeek,Other.Hour,Other.Minute)
@@ -61,18 +61,18 @@ struct DATETIMESYSTEM_API FMonthTime
 public:
 
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 1, UIMin = 1, ClampMax = 31, UIMax = 31))
-        int32 Day = 1;
+    int32 Day = 1;
 
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0, UIMin = 0, ClampMax = 23, UIMax = 23))
-        int32 Hour = 0;
+    int32 Hour = 0;
 
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0, UIMin = 0, ClampMax = 59, UIMax = 59))
-        int32 Minute = 0;
+    int32 Minute = 0;
 
     FMonthTime() : FMonthTime(1, 0, 0)
     {}
 
-    FMonthTime(int32 Day, int32 Hour, int32 Minute) : Day(Day), Hour(Hour), Minute(Minute)
+    FMonthTime(const int32 Day, const int32 Hour, const int32 Minute) : Day(Day), Hour(Hour), Minute(Minute)
     {}
 
     FMonthTime(const FMonthTime& Other) : FMonthTime(Other.Day, Other.Hour, Other.Minute)
