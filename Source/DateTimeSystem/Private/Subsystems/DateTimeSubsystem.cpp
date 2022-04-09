@@ -89,7 +89,7 @@ void UDateTimeSubsystem::BindDateTimeEvent(const FDateTime DateTime, const FOnTi
 
 void UDateTimeSubsystem::UnbindDateTimeEvent(const FDateTime DateTime, const FOnTimeEvent& Value)
 {
-	if (FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime))
+	if (const TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = DateTimeEvents.Find(DateTime))
 	{
 		MulticastDelegate->Remove(Value);
 	}
@@ -97,7 +97,7 @@ void UDateTimeSubsystem::UnbindDateTimeEvent(const FDateTime DateTime, const FOn
 
 void UDateTimeSubsystem::UnbindAllDateTimeEvents(const FDateTime DateTime)
 {
-	if (FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime))
+	if (TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = DateTimeEvents.Find(DateTime))
 	{
 		MulticastDelegate->Clear();
 	}
@@ -111,7 +111,7 @@ void UDateTimeSubsystem::BindWeeklyEvent(const FWeekTime WeekTime, const FOnTime
 
 void UDateTimeSubsystem::UnbindWeeklyEvent(const FWeekTime WeekTime, const FOnTimeEvent& Value)
 {
-	if (FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime))
+	if (TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = WeeklyEvents.Find(WeekTime))
 	{
 		MulticastDelegate->Remove(Value);
 	}
@@ -119,7 +119,7 @@ void UDateTimeSubsystem::UnbindWeeklyEvent(const FWeekTime WeekTime, const FOnTi
 
 void UDateTimeSubsystem::UnbindAllWeeklyEvents(const FWeekTime WeekTime)
 {
-	if (FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime))
+	if (TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = WeeklyEvents.Find(WeekTime))
 	{
 		MulticastDelegate->Clear();
 	}
@@ -133,7 +133,7 @@ void UDateTimeSubsystem::BindMonthlyEvent(const FMonthTime MonthTime, const FOnT
 
 void UDateTimeSubsystem::UnbindMonthlyEvent(const FMonthTime MonthTime, const FOnTimeEvent& Value)
 {
-	if (FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime))
+	if (TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = MonthlyEvents.Find(MonthTime))
 	{
 		MulticastDelegate->Remove(Value);
 	}
@@ -141,7 +141,7 @@ void UDateTimeSubsystem::UnbindMonthlyEvent(const FMonthTime MonthTime, const FO
 
 void UDateTimeSubsystem::UnbindAllMonthlyEvents(const FMonthTime MonthTime)
 {
-	if (FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime))
+	if (TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = MonthlyEvents.Find(MonthTime))
 	{
 		MulticastDelegate->Clear();
 	}
@@ -149,7 +149,7 @@ void UDateTimeSubsystem::UnbindAllMonthlyEvents(const FMonthTime MonthTime)
 
 void UDateTimeSubsystem::CallDateTimeEvents(const FDateTime DateTime)
 {
-	const FOnTimeEventMulticast* MulticastDelegate = DateTimeEvents.Find(DateTime);
+	const TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = DateTimeEvents.Find(DateTime);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
@@ -158,7 +158,7 @@ void UDateTimeSubsystem::CallDateTimeEvents(const FDateTime DateTime)
 
 void UDateTimeSubsystem::CallWeeklyEvents(const FWeekTime WeekTime)
 {
-	const FOnTimeEventMulticast* MulticastDelegate = WeeklyEvents.Find(WeekTime);
+	const TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = WeeklyEvents.Find(WeekTime);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
@@ -167,7 +167,7 @@ void UDateTimeSubsystem::CallWeeklyEvents(const FWeekTime WeekTime)
 
 void UDateTimeSubsystem::CallMonthlyEvents(const FMonthTime MonthTime)
 {
-	const FOnTimeEventMulticast* MulticastDelegate = MonthlyEvents.Find(MonthTime);
+	const TObjectPtr<FOnTimeEventMulticast> MulticastDelegate = MonthlyEvents.Find(MonthTime);
 	if (MulticastDelegate && MulticastDelegate->IsBound())
 	{
 		MulticastDelegate->Broadcast();
