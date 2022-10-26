@@ -34,17 +34,6 @@ class DATETIMESYSTEM_API UDateTimeSubsystem : public UWorldSubsystem
 
 public:
 
-protected:
-
-	UPROPERTY(SaveGame)
-	FDateTime CurrentDate;
-
-	UPROPERTY(SaveGame)
-	FTimespan TimeUpdateSpeed;
-
-	UPROPERTY(SaveGame)
-	FTimerHandle TimerHandle;
-
 	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
 	FOnUpdateTime OnUpdateTime;
 
@@ -60,6 +49,16 @@ protected:
 	UPROPERTY(SaveGame,BlueprintAssignable, Category = "Time Subsystem|Events")
 	FOnChangeYear OnChangeYear;
 
+protected:
+
+	UPROPERTY(SaveGame)
+	FDateTime CurrentDate;
+
+	UPROPERTY(SaveGame)
+	FTimespan TimeUpdateSpeed;
+
+	UPROPERTY(SaveGame)
+	FTimerHandle TimerHandle;
 
 	UPROPERTY(SaveGame)
 	TMap<FDateTime, FOnTimeEventMulticast> DateTimeEvents;
